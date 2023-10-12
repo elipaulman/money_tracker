@@ -17,6 +17,7 @@
 .env.development.local
 .env.test.local
 .env.production.local
+# You will need to manually create this file with your Mongo URL
 /api/.env
 
 npm-debug.log*
