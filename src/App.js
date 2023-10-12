@@ -7,26 +7,32 @@ function App() {
   const [description, setDescription] = useState("");
   const [transactions, setTransactions] = useState("");
 
+  // Define the root URL for your API
+  const apiUrl = "http://localhost:4000/api/transaction";
+
   useEffect(() => {
     getTransactions().then(setTransactions);
   }, []);
 
   async function getTransactions() {
-    // const url = (process.env.REACT_APP_API_URL + "/transaction");
-    const url = "http://localhost:4000/transaction";
-    const response = await fetch(url);
-    return await response.json();
+    try {
+      const response = await fetch(apiUrl, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      return await response.json();
+    } catch (error) {
+      console.error("Failed to fetch transactions:", error);
+      throw error;
+    }
   }
 
   function addNewTransaction(e) {
     e.preventDefault();
-    // const url = (process.env.REACT_APP_API_URL + "/transaction");
-    const url = "http://localhost:4000/api/transaction";
-    console.log(url);
 
     const price = name.split(" ")[0];
 
-    fetch(url, {
+    fetch(apiUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -34,15 +40,23 @@ function App() {
         name: name.substring(price.length + 1),
         description,
         datetime,
-      }),
-    }).then((response) => {
-      response.json().then((json) => {
+      })
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to add transaction");
+        }
+        return response.json();
+      })
+      .then((json) => {
         setName("");
         setDatetime("");
         setDescription("");
-        console.log("result", json);
+        console.log("Result", json);
+      })
+      .catch((error) => {
+        console.error("Failed to add transaction:", error);
       });
-    });
   }
 
   let balance = 0;
@@ -90,11 +104,8 @@ function App() {
                 <div className="description">{transaction.description}</div>
               </div>
               <div className="right">
-                {/* console.log(transaction.price); */}
                 <div
-                  className={
-                    "price " + (transaction.price < 0 ? "red" : "green")
-                  }
+                  className={"price " + (transaction.price < 0 ? "red" : "green")}
                 >
                   {transaction.price}
                 </div>
