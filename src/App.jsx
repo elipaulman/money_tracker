@@ -1,38 +1,30 @@
 import { useState, useEffect } from "react";
-import "./App.css";
+import './App.css';
+
 
 function App() {
   const [name, setName] = useState("");
   const [datetime, setDatetime] = useState("");
   const [description, setDescription] = useState("");
-  const [transactions, setTransactions] = useState("");
-
-  // Define the root URL for your API
-  const apiUrl = "http://localhost:4000/api/transaction";
+  const [transactions, setTransactions] = useState([]); 
 
   useEffect(() => {
     getTransactions().then(setTransactions);
   }, []);
 
   async function getTransactions() {
-    try {
-      const response = await fetch(apiUrl, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      });
-      return await response.json();
-    } catch (error) {
-      console.error("Failed to fetch transactions:", error);
-      throw error;
-    }
+    const url = "http://localhost:4000/api/transaction";
+    const response = await fetch(url);
+    return await response.json();
   }
 
   function addNewTransaction(e) {
     e.preventDefault();
+    const url = "http://localhost:4000/api/transaction";
 
     const price = name.split(" ")[0];
 
-    fetch(apiUrl, {
+    fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -40,23 +32,16 @@ function App() {
         name: name.substring(price.length + 1),
         description,
         datetime,
-      })
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to add transaction");
-        }
-        return response.json();
-      })
-      .then((json) => {
+      }),
+    }).then((response) => {
+      response.json().then((json) => {
         setName("");
         setDatetime("");
         setDescription("");
-        console.log("Result", json);
-      })
-      .catch((error) => {
-        console.error("Failed to add transaction:", error);
+        console.log("result", json);
+        getTransactions().then(setTransactions);
       });
+    });
   }
 
   let balance = 0;
@@ -105,7 +90,9 @@ function App() {
               </div>
               <div className="right">
                 <div
-                  className={"price " + (transaction.price < 0 ? "red" : "green")}
+                  className={
+                    "price " + (transaction.price < 0 ? "red" : "green")
+                  }
                 >
                   {transaction.price}
                 </div>

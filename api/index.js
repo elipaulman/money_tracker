@@ -1,32 +1,33 @@
 const express = require("express");
 const cors = require("cors");
-const mongoose = require("mongoose");
-require('dotenv').config(); 
+const dotenv = require("dotenv");
 const Transaction = require("./models/Transaction.js");
-
+const mongoose = require("mongoose");
 const app = express();
-const port = 4000;
+
+dotenv.config();
+
 const url = "/api/test";
+const port = 4000;
 const message = "test ok";
 
 app.use(cors());
 app.use(express.json());
 
+const mongoURI = process.env.MONGO_URL;
+
 // Connect to MongoDB
-mongoose.connect(process.env.MONGO_URL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-
-const db = mongoose.connection;
-
-db.on("error", (error) => {
-  console.error("Error connecting to MongoDB database:", error);
-});
-
-db.once("open", () => {
-  console.log("Connected to MongoDB database.");
-});
+mongoose
+  .connect(mongoURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("Connected to MongoDB database.");
+  })
+  .catch((err) => {
+    console.error("Error connecting to MongoDB:", err);
+  });
 
 app.get(url, (req, res) => {
   res.json(message);
@@ -56,7 +57,7 @@ app.post("/api/transaction", async (req, res) => {
 
     res.json(transaction);
   } catch (error) {
-    console.error("Error creating a transaction:", error);
+    console.error("Error creating transaction:", error);
     res.status(500).send("Internal Server Error");
   }
 });
@@ -71,14 +72,7 @@ app.get("/api/transaction", async (req, res) => {
   }
 });
 
-// Close MongoDB connection on application shutdown
-process.on('SIGINT', () => {
-  mongoose.connection.close(() => {
-    console.log('MongoDB connection is closed.');
-    process.exit(0);
-  });
-});
-
+// Static Port
 app.listen(port, () => {
   console.log(`App listening on port http://localhost:${port}${url}`);
 });
