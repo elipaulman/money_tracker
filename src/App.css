@@ -3,8 +3,9 @@
 }
 
 body {
-  background-color: #17181f;
-  color: #ddd;
+  background-color: #191820; /* Dark background */
+  color: #fff; /* White text color */
+  font-family: Arial, sans-serif; /* Change the font */
 }
 
 main {
@@ -24,9 +25,9 @@ form {
 
 form input {
   width: 100%;
-  background-color: transparent;
-  color: #ddd;
-  border: 2px solid #30313d;
+  background-color: #383838; /* Dark input background */
+  color: #fff; /* White text color */
+  border: 2px solid #444; /* Light gray border */
   padding: 2px 5px;
   border-radius: 5px;
 }
@@ -41,52 +42,55 @@ form div.basic {
   margin-bottom: 5px;
 }
 
-form button{
+form button {
   width: 100%;
   margin-top: 5px;
   border: 0;
   border-radius: 5px;
   padding: 5px;
-  background-color: #ddd;
+  background-color: #4287f5; /* Blue button background */
+  color: #fff; /* White button text color */
+  cursor: pointer;
 }
 
-div.transactions{
+div.transactions {
   margin-top: 10px;
 }
 
-div.transaction{
+div.transaction {
   display: flex;
   justify-content: space-between;
   padding: 5px 0;
-  border-top: 1px solid #30313d;
+  border-top: 1px solid #444; /* Light gray border */
 }
 
-div.transaction:first-child{
+div.transaction:first-child {
   border-top: 0;
 }
 
-div.transaction div.name{
+div.transaction div.name {
   font-size: 1rem;
+  color: #fff; /* White text color */
 }
 
-div.transaction div.description{
+div.transaction div.description {
   font-size: 0.7rem;
-  color: #888;
+  color: #777; /* Gray text color */
 }
 
-div.right{
+div.right {
   text-align: right;
 }
 
-div.price.green{
-  color: #1c1;
+div.price.green {
+  color: #3d9c0b; /* Green price color */
 }
 
-div.price.red{
-  color: #c11;
+div.price.red {
+  color: #d70b0b; /* Red price color */
 }
 
-div.transaction div.datetime{
+div.transaction div.datetime {
   font-size: 0.7rem;
-  color: #888;
+  color: #777; /* Gray text color */
 }

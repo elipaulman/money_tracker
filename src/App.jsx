@@ -53,8 +53,8 @@ function App() {
   return (
     <main>
       <h1>
+      <span>$</span>
         {balance}
-        <span>.00</span>
       </h1>
       <form action="" onSubmit={addNewTransaction}>
         <div className="basic">
@@ -62,7 +62,7 @@ function App() {
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder={"price and name"}
+            placeholder={"+/- Amount & Name"}
           />
           <input
             value={datetime}
@@ -75,10 +75,10 @@ function App() {
             type="text"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            placeholder={"description"}
+            placeholder={"Description"}
           />
         </div>
-        <button type="submit">Add new transaction</button>
+        <button type="submit">Add transaction</button>
       </form>
       <div className="transactions">
         {transactions.length > 0 &&
