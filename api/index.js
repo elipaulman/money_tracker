@@ -11,7 +11,8 @@ const url = "/api/test";
 const port = 4000;
 const message = "test ok";
 
-app.use(cors());
+app.use(cors()); // Enable CORS
+
 app.use(express.json());
 
 const mongoURI = process.env.MONGO_URL;
@@ -36,12 +37,7 @@ app.get(url, (req, res) => {
 app.post("/api/transaction", async (req, res) => {
   try {
     // Check if all required fields are present in the request body
-    if (
-      !req.body.name ||
-      !req.body.description ||
-      !req.body.datetime ||
-      !req.body.price
-    ) {
+    if (!req.body.name || !req.body.description || !req.body.datetime || !req.body.price) {
       res.status(400).send("Missing required fields");
       return;
     }

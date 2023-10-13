@@ -61,7 +61,7 @@ div.transaction {
   display: flex;
   justify-content: space-between;
   padding: 5px 0;
-  border-top: 1px solid #444; /* Light gray border */
+  border-top: 1px solid #616161; /* Light gray border */
 }
 
 div.transaction:first-child {
@@ -75,7 +75,7 @@ div.transaction div.name {
 
 div.transaction div.description {
   font-size: 0.7rem;
-  color: #777; /* Gray text color */
+  color: #b4b4b4; /* Gray text color */
 }
 
 div.right {
@@ -92,5 +92,5 @@ div.price.red {
 
 div.transaction div.datetime {
   font-size: 0.7rem;
-  color: #777; /* Gray text color */
+  color: #b4b4b4; /* Gray text color */
 }

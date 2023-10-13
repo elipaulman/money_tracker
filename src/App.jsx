@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import './App.css';
 
-
 function App() {
   const [name, setName] = useState("");
   const [datetime, setDatetime] = useState("");
@@ -44,6 +43,13 @@ function App() {
     });
   }
 
+  const formatDateTime = (isoDateTime) => {
+    return new Intl.DateTimeFormat('en-US', {
+      dateStyle: 'short',
+      timeStyle: 'short',
+    }).format(new Date(isoDateTime));
+  };
+
   let balance = 0;
   for (const transaction of transactions) {
     balance = balance + transaction.price;
@@ -53,7 +59,7 @@ function App() {
   return (
     <main>
       <h1>
-      <span>$</span>
+        <span>$</span>
         {balance}
       </h1>
       <form action="" onSubmit={addNewTransaction}>
@@ -94,9 +100,9 @@ function App() {
                     "price " + (transaction.price < 0 ? "red" : "green")
                   }
                 >
-                  {transaction.price}
+                  {transaction.price >= 0 ? `+${transaction.price}` : transaction.price}
                 </div>
-                <div className="datetime">{transaction.datetime}</div>
+                <div className="datetime">{formatDateTime(transaction.datetime)}</div>
               </div>
             </div>
           ))}
